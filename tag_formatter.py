@@ -8,8 +8,8 @@ def extract_tag_names(text):
     extracted_tags = []
 
     for line in lines:
-        # Use regular expression to match the pattern: starts with '?', then text, then ends with a number
-        match = re.search(r'\?\s+(\w+)\s+\d+', line)
+        # Use regular expression to match the pattern: starts with '?', then text (including spaces), then ends with a number
+        match = re.search(r'\?\s+(.+?)\s+\d+$', line)
         if match:
             # Append the tag name found
             extracted_tags.append(match.group(1))
