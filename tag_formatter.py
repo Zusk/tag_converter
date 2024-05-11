@@ -2,25 +2,20 @@ import pyperclip
 import re
 
 def extract_tag_names(text):
-    # Split the text into lines
-    lines = text.split('\n')
-    # Prepare to collect results
+    # Split the text on any combination of carriage return and newline characters
+    lines = re.split(r'\r?\n', text)
     extracted_tags = []
-
+    
     for line in lines:
-        # Use regular expression to match the pattern: starts with '?', then text (including spaces), then ends with a number
+        # Adjust the regular expression to allow for multiple spaces between the tag name and the number
         match = re.search(r'\?\s+(.+?)\s+\d+$', line)
         if match:
-            # Append the tag name found
-            extracted_tags.append(match.group(1))
+            extracted_tags.append(match.group(1).strip())  # Strip any trailing spaces from the tag name
     
-    # Join all extracted tag names into a single string separated by commas
     return ', '.join(extracted_tags)
 
 def clean_text(text):
-    # Replace multiple spaces with a single space
     text = re.sub(r'\s+', ' ', text)
-    # Clean any other formatting issues if necessary
     return text.strip()
 
 def main():
